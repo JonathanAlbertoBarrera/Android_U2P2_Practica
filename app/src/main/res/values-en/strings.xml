@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">U2P2_PERSONAS_JonathanBarrera4EDSM</string>
+    <string name="titulo">Peoples App</string>
+    <string name="btn_registrar">Register Person</string>
+    <string name="btn_mostrar">Show People</string>
+    <string name="btn_salir">Get out</string>
+</resources>
