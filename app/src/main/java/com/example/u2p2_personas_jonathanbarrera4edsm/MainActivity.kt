@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegistrar.setOnClickListener {
-            val intent= Intent(this@MainActivity,RegistrarActivity::class.java)
+            val intent= Intent(this@MainActivity,RegistrarPersonasActivity::class.java)
             startActivity(intent)
         }
 

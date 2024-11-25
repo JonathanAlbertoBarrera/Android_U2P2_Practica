@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/edt_Nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <TextView
+    <EditText
         android:id="@+id/edt_apellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,8 +40,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_Nombre" />
 
-    <TextView
-        android:id="@+id/edt_apellido2"
+    <EditText
+        android:id="@+id/edt_estado_nacimiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -72,7 +72,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_apellido2" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_estado_nacimiento" />
 
     <Button
         android:id="@+id/btnRegistrarUsuario"
