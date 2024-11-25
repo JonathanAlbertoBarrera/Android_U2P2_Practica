@@ -13,6 +13,12 @@
         android:theme="@style/Theme.U2P2_PERSONAS_JonathanBarrera4EDSM"
         tools:targetApi="31">
         <activity
+            android:name=".MostrarPersonasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -1,10 +1,8 @@
 package com.example.u2p2_personas_jonathanbarrera4edsm
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.u2p2_personas_jonathanbarrera4edsm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +11,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnRegistrar.setOnClickListener {
+            val intent= Intent(this@MainActivity,RegistrarActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnMostrar.setOnClickListener {
+            val intent=Intent(this@MainActivity,MostrarPersonasActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnSalir.setOnClickListener {
+            finish()
+        }
 
     }
 }
