@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request.Method.POST
 import com.android.volley.toolbox.Volley
-import com.example.u2p2_personas_jonathanbarrera4edsm.databinding.ActivityMostrarPersonasBinding
 import com.example.u2p2_personas_jonathanbarrera4edsm.databinding.ActivityRegistarPersonasBinding
 
 class RegistrarPersonasActivity : AppCompatActivity() {
@@ -45,7 +44,7 @@ class RegistrarPersonasActivity : AppCompatActivity() {
         binding.btnRegistrarUsuario.setOnClickListener {
             val queue = Volley.newRequestQueue(this)
             val url = "http://localhost:8080/api/personas"
-            val metodo = VoiceInteractor.Request.Method.POST
+            //val metodo = VoiceInteractor.Request.Method.POST
         }
 
         binding.btnRegresar.setOnClickListener {

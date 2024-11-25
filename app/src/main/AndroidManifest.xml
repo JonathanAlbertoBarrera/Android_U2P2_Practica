@@ -17,7 +17,7 @@
             android:name=".MostrarPersonasActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistrarActivity"
+            android:name=".RegistrarPersonasActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
