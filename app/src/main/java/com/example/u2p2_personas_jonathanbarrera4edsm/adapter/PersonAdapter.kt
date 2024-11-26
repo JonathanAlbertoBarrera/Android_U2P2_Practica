@@ -7,7 +7,7 @@ import com.example.u2p2_personas_jonathanbarrera4edsm.databinding.LayoutPersonas
 import com.example.u2p2_personas_jonathanbarrera4edsm.model.Person
 
 class PersonAdapter(var lista: List<Person>):RecyclerView.Adapter<PersonAdapter.ViewHolder>() {
-    var onItemClick:((Person) -> Unit)?=null
+    var onItemClick: ((Person) -> Unit)?=null
     class ViewHolder(val binding:LayoutPersonasBinding):RecyclerView.ViewHolder(binding.root){
 
     }
@@ -24,6 +24,10 @@ class PersonAdapter(var lista: List<Person>):RecyclerView.Adapter<PersonAdapter.
             txtApellidos.text=person.apellidos
             txtFechaNacimiento.text=person.fechaNacimiento.toString()
             txtEstado.text=person.apellidos
+
+            holder.itemView.setOnClickListener{
+                onItemClick?.invoke(person)
+            }
         }
     }
 
