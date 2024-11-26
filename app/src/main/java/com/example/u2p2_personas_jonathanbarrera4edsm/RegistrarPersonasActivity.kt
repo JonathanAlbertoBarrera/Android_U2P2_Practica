@@ -3,6 +3,7 @@ package com.example.u2p2_personas_jonathanbarrera4edsm
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
@@ -26,31 +27,65 @@ class RegistrarPersonasActivity : AppCompatActivity() {
             val fechaNacimiento = binding.edtFechaNacimiento.text.toString()
             val estadoNacimiento = binding.edtEstadoNacimiento.text.toString()
 
+            if(nombre.isNotEmpty() && apellido.isNotEmpty()&& fechaNacimiento.isNotEmpty() && estadoNacimiento.isNotEmpty()){
+                //PARA PETICION
 
-            //PARA PETICION
+                val url = "http://192.168.106.100:8080/api/personas"
+                val metodo = Request.Method.POST
 
-            val url = "http://192.168.1.87:8080/api/personas"
-            val metodo = Request.Method.POST
+                val body=JSONObject()
+                body.put("nombre",nombre)
+                body.put("apellidos",apellido)
+                body.put("fechaNacimiento",fechaNacimiento)
+                body.put("estadoNacimiento",estadoNacimiento)
 
-            val body=JSONObject()
-            body.put("nombre",nombre)
-            body.put("apellidos",apellido)
-            body.put("fechaNacimiento",fechaNacimiento)
-            body.put("estadoNacimiento",estadoNacimiento)
+                val listener= Response.Listener<JSONObject> { resultado ->
+                    val mensaje=resultado.getString("message")
+                    //Si se hizo el registro
+                    if(mensaje.equals("Persona registrada exitosamente")){
+                        val builder=AlertDialog.Builder(this)
+                        builder.setTitle("Resultado")
+                        builder.setMessage("La persona se ha registrado correctamente")
+                        builder.setPositiveButton("OK"){dialog, _ ->
+                            binding.edtNombre.setText("")
+                            binding.edtApellido.setText("")
+                            binding.edtFechaNacimiento.setText("")
+                            binding.edtEstadoNacimiento.setText("")
+                            dialog.cancel()
+                        }
+                        builder.show()
 
-            val listener= Response.Listener<JSONObject> { resultado ->
-                val mensaje=resultado.getString("message")
-                if(mensaje.equals("Persona registrada exitosamente")){
-                    Toast.makeText(this,"Persona registrada",Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(this,"Error al registrar persona",Toast.LENGTH_SHORT).show()
+                    }else{ //No se hizo
+                        val builder=AlertDialog.Builder(this)
+                        builder.setTitle("Resultado")
+                        builder.setMessage("NO SE REGISTRO A LA PERSONA")
+                        builder.setPositiveButton("OK :("){dialog, _ ->
+                            binding.edtNombre.setText("")
+                            binding.edtApellido.setText("")
+                            binding.edtFechaNacimiento.setText("")
+                            binding.edtEstadoNacimiento.setText("")
+                            dialog.cancel()
+                        }
+                        builder.show()
+                    }
                 }
+
+                val errorListener = Response.ErrorListener { error -> }
+
+                val request=JsonObjectRequest(metodo,url,body,listener,errorListener)
+                queue.add(request)
+            }else{ //Hay un campo vacio
+                val builder=AlertDialog.Builder(this)
+                builder.setTitle("Nota")
+                builder.setMessage("Tienes que llenar todos los campos")
+                builder.setPositiveButton("OK"){dialog, _ ->
+                    dialog.cancel()
+                }
+                builder.show()
             }
 
-            val errorListener = Response.ErrorListener { error -> }
 
-            val request=JsonObjectRequest(metodo,url,body,listener,errorListener)
-            queue.add(request)
+
         }
 
         binding.btnRegresar.setOnClickListener {
