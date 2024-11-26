@@ -36,7 +36,8 @@ class MostrarPersonasActivity : AppCompatActivity() {
             val arreglo = resultado.getJSONArray("data")
             for(i in 0 until arreglo.length()){
                 lista.add(
-                    Person(nombre =arreglo.getJSONObject(i).getString("nombre"),
+                    Person(id=arreglo.getJSONObject(i).getInt("id"),
+                        nombre =arreglo.getJSONObject(i).getString("nombre"),
                         apellidos = arreglo.getJSONObject(i).getString("apellidos"),
                         fechaNacimiento = arreglo.getJSONObject(i).getString("fechaNacimiento"),
                         estadoNacimiento = arreglo.getJSONObject(i).getString("estadoNacimiento") )
@@ -47,6 +48,7 @@ class MostrarPersonasActivity : AppCompatActivity() {
             val adaptador=PersonAdapter(lista)
             adaptador.onItemClick={ persona ->
                 val intent= Intent(this@MostrarPersonasActivity,DetallePersona::class.java);
+                intent.putExtra("id",persona.id)
                 intent.putExtra("nombre",persona.nombre)
                 intent.putExtra("apellidos",persona.apellidos)
                 intent.putExtra("fechaNacimiento",persona.fechaNacimiento)
