@@ -47,11 +47,7 @@ class RegistrarPersonasActivity : AppCompatActivity() {
                 }
             }
 
-            val errorListener = Response.ErrorListener { error ->
-                Toast.makeText(this, "Error: ${error.networkResponse?.statusCode}", Toast.LENGTH_SHORT).show()
-                val errorMessage = String(error.networkResponse?.data ?: ByteArray(0))
-                binding.mensajes.text = errorMessage
-            }
+            val errorListener = Response.ErrorListener { error -> }
 
             val request=JsonObjectRequest(metodo,url,body,listener,errorListener)
             queue.add(request)
