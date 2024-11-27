@@ -49,8 +49,7 @@ class DetallePersona : AppCompatActivity() {
 
                 val listener = Response.Listener<JSONObject> { resultado ->
                     val mensaje = resultado.getString("message")
-                    runOnUiThread {//AGREGUE ESTO PQ COMO LA RESPUESTA O PETICION AUN NO SE PROCESABA, POR ESO NO MOSTRABA LOS ALERTS HASTA QUE SE DABA CLIC QUE TERMINABA EL HILO O PROCESO.
-                        //ESA LINEA ENTONCES SOLUCIONA ESO Y EL MENSAJE ALERT APARECE SIN PROBLEMA
+                    runOnUiThread {
                         if (mensaje == "Persona actualizada exitosamente") { // SI SE ACTUALIZÓ
                             val builder = AlertDialog.Builder(this)
                             builder.setTitle("Resultado")
