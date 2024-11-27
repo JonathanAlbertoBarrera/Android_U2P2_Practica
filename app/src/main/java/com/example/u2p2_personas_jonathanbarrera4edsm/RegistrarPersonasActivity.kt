@@ -30,7 +30,7 @@ class RegistrarPersonasActivity : AppCompatActivity() {
             if(nombre.isNotEmpty() && apellido.isNotEmpty()&& fechaNacimiento.isNotEmpty() && estadoNacimiento.isNotEmpty()){
                 //PARA PETICION
 
-                val url = "http://192.168.106.100:8080/api/personas"
+                val url = "http://192.168.105.179:8080/api/personas"
                 val metodo = Request.Method.POST
 
                 val body=JSONObject()

@@ -28,7 +28,7 @@ class MostrarPersonasActivity : AppCompatActivity() {
         //------------PARA PETICION
         val queue = Volley.newRequestQueue(this)
 
-        val url = "http://192.168.1.87:8080/api/personas"
+        val url = "http://192.168.105.179:8080/api/personas"
         val metodo = Request.Method.GET
         val body = null
         val listener = Response.Listener<JSONObject> { resultado ->
