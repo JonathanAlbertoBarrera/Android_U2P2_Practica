@@ -23,7 +23,7 @@ class PersonAdapter(var lista: List<Person>):RecyclerView.Adapter<PersonAdapter.
             txtNombre.text=person.nombre
             txtApellidos.text=person.apellidos
             txtFechaNacimiento.text=person.fechaNacimiento.toString()
-            txtEstado.text=person.apellidos
+            txtEstado.text=person.estadoNacimiento
 
             holder.itemView.setOnClickListener{
                 onItemClick?.invoke(person)

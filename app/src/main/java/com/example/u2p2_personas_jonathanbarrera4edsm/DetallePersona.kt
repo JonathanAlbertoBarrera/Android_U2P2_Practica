@@ -39,7 +39,7 @@ class DetallePersona : AppCompatActivity() {
         binding.btnModificar.setOnClickListener {
             if (!nombre.isNullOrEmpty() && !apellidos.isNullOrEmpty() && !fechaNacimiento.isNullOrEmpty() && !estadoNacimiento.isNullOrEmpty()) {
 
-                val url = "http://192.168.105.179:8080/api/personas/${id}"
+                val url = "http://192.168.1.87:8080/api/personas/${id}"
                 val metodo = Request.Method.PUT
                 val body = JSONObject()
                 body.put("nombre", binding.edtNombre.text.toString())
@@ -49,41 +49,46 @@ class DetallePersona : AppCompatActivity() {
 
                 val listener = Response.Listener<JSONObject> { resultado ->
                     val mensaje = resultado.getString("message")
-                    if (mensaje.equals("Persona actualizada exitosamente")) {//SI SE ACTUALIZO
-                        val builder = AlertDialog.Builder(this)
-                        builder.setTitle("Resultado")
-                        builder.setMessage("PERSONA ACTUALIZADA")
-                        builder.setPositiveButton("OK :(") { dialog, _ ->
-                            dialog.cancel()
-                            val intent = Intent(this@DetallePersona, MainActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
+                    runOnUiThread {//AGREGUE ESTO PQ COMO LA RESPUESTA O PETICION AUN NO SE PROCESABA, POR ESO NO MOSTRABA LOS ALERTS HASTA QUE SE DABA CLIC QUE TERMINABA EL HILO O PROCESO.
+                        //ESA LINEA ENTONCES SOLUCIONA ESO Y EL MENSAJE ALERT APARECE SIN PROBLEMA
+                        if (mensaje == "Persona actualizada exitosamente") { // SI SE ACTUALIZÓ
+                            val builder = AlertDialog.Builder(this)
+                            builder.setTitle("Resultado")
+                            builder.setMessage("PERSONA ACTUALIZADA")
+                            builder.setPositiveButton("OK :(") { dialog, _ ->
+                                dialog.cancel()
+                                val intent = Intent(this@DetallePersona, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                            }
+                            builder.show()
+                        } else { // NO SE ACTUALIZÓ
+                            val builder = AlertDialog.Builder(this)
+                            builder.setTitle("Resultado")
+                            builder.setMessage("PERSONA NO ACTUALIZADA, VUELVE A INTENTAR PORFA")
+                            builder.setPositiveButton("OK :(") { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            builder.show()
                         }
-                        builder.show()
-                    } else {//NO SE ACTUALIZO
-                        val builder = AlertDialog.Builder(this)
-                        builder.setTitle("Resultado")
-                        builder.setMessage("PERSONA NO ACTUALIZADA, VUELVE A INTENTAR PORFA")
-                        builder.setPositiveButton("OK :(") { dialog, _ ->
-                            dialog.cancel()
-                        }
-                        builder.show()
                     }
                 }
+
 
                 val errorListener = Response.ErrorListener { error -> }
 
                 val request = JsonObjectRequest(metodo, url, body, listener, errorListener)
                 queue.add(request)
             }else{//hay campo vacio
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Resultado")
-                builder.setMessage("NO PUEDES ACTUALIZAR CON CAMPOS VACIOS")
-                builder.setPositiveButton("OK :(") { dialog, _ ->
-                    dialog.cancel()
+                runOnUiThread {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Resultado")
+                    builder.setMessage("NO PUEDES ACTUALIZAR CON CAMPOS VACIOS")
+                    builder.setPositiveButton("OK :(") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    builder.show()
                 }
-                builder.show()
             }
         }
 
@@ -91,33 +96,36 @@ class DetallePersona : AppCompatActivity() {
         // Botón para eliminar
         binding.btnEliminar.setOnClickListener {
 
-            val url = "http://192.168.105.179:8080/api/personas/${id}"
+            val url = "http://192.168.1.87:8080/api/personas/${id}"
             val metodo=Request.Method.DELETE
             val body=null
 
-            val listener=Response.Listener<JSONObject> { resultado ->
-                val mensaje=resultado.getString("message")
-                if(mensaje.equals("Persona eliminada exitosamente")){//SE ELIMINO
-                    val builder= AlertDialog.Builder(this)
-                    builder.setTitle("Resultado")
-                    builder.setMessage("PERSONA ELIMINADA")
-                    builder.setPositiveButton("OK :("){dialog, _ ->
-                        dialog.cancel()
-                        val intent = Intent(this@DetallePersona,MainActivity::class.java)
-                        intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
+            val listener = Response.Listener<JSONObject> { resultado ->
+                val mensaje = resultado.getString("message")
+                runOnUiThread {
+                    if (mensaje == "Persona eliminada exitosamente") { // SE ELIMINÓ
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Resultado")
+                        builder.setMessage("PERSONA ELIMINADA")
+                        builder.setPositiveButton("OK :(") { dialog, _ ->
+                            dialog.cancel()
+                            val intent = Intent(this@DetallePersona, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                        builder.show()
+                    } else { // NO SE ELIMINÓ
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Resultado")
+                        builder.setMessage("PERSONA NO ELIMINADA, VUELVE A INTENTAR PORFA")
+                        builder.setPositiveButton("OK :(") { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        builder.show()
                     }
-                    builder.show()
-                }else{
-                    val builder= AlertDialog.Builder(this)
-                    builder.setTitle("Resultado")
-                    builder.setMessage("PERSONA NO ELIMINADA, VUELVE A INTENTAR PORFA")
-                    builder.setPositiveButton("OK :("){dialog, _ ->
-                        dialog.cancel()
-                    }
-                    builder.show()
                 }
             }
+
 
             val errorListener = Response.ErrorListener { error -> }
 
